@@ -1,1 +1,44 @@
-Hello World
+<html>
+
+<head>
+
+    <title>Test eines Service Workers</title>
+    <script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }).catch(function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        }
+
+        var CACHE_NAME = 'my-site-cache-v1';
+        var urlsToCache = [
+          '/',
+          '/styles/main.css',
+          '/script/main.js'
+        ];
+        self.addEventListener('install', function(event) {
+          // Perform install steps
+            // Perform install steps
+              event.waitUntil(
+                caches.open(CACHE_NAME)
+                  .then(function(cache) {
+                    console.log('Opened cache');
+                    return cache.addAll(urlsToCache);
+                  })
+              );
+        });
+    </script>
+
+</head>
+<body>
+    <h1>Diese App versucht einen Service Worker zu installieren</h1>
+    <p>
+       - https://muthual.github.io/ <br />
+       - https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/
+    </p>
+</body>
+</html>
